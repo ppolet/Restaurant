@@ -3,7 +3,18 @@ package kitchen;
 
 //1.5
 public enum Dish {
-    Fish, Steak, Soup, Juice, Water;
+    Fish(25), Steak(30), Soup(15), Juice(5), Water(3);   //5.1.1
+    
+    private int duration;
+    
+    private Dish(int duration){
+        this.duration = duration;
+    }
+    
+    //5.1.2
+    public int getDuration(){
+        return duration;
+    }
     
     //1.6 - сформирует строку из всех блюд
     public static String allDishesToString(){

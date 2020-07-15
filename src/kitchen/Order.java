@@ -25,12 +25,29 @@ public class Order {
         if (dishes.isEmpty()) return "";
         
         StringBuilder st = new StringBuilder();
-        st.append("Ваш заказ: ");
-        for(int i = 0; i<dishes.size(); i++){
-            st.append(dishes.get(i));
-            if (i != dishes.size()-1) st.append(", ");
-        }
-        return st.toString();
+        st.append("Your order: ");
+        st.append(dishes.toString());
+        st.append(" of " + tablet.toString());
         
+//        for(int i = 0; i<dishes.size(); i++){
+//            st.append(dishes.get(i));
+//            if (i != dishes.size()-1) st.append(", ");
+//        }
+        return st.toString();
     }
+    
+    //5.2.3
+    public int getTotalCookingTime(){
+        int result = 0;
+        for(Dish d: dishes){
+            result += d.getDuration();
+        }
+        return result;
+    }
+    
+    //5.3 - который будет определять, есть ли какие либо блюда в заказе.
+    public boolean isEmpty(){
+        return dishes.isEmpty();
+    }
+    
 }
