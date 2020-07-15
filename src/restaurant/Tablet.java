@@ -1,6 +1,7 @@
 
 package restaurant;
 
+import ad.AdvertisementManager;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public class Tablet extends Observable{
             order = new Order(this);  //Создаем новый заказ на этом планшете
             if(!order.isEmpty()){    //5.5
                 ConsoleHelper.writeMessage(order.toString());
+                new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();  //8.5 - вызываем видео и передаем ему время готовки заказа в секундах
                 setChanged();
                 notifyObservers(order);
             }
