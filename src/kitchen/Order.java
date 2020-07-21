@@ -49,5 +49,10 @@ public class Order {
     public boolean isEmpty(){
         return dishes.isEmpty();
     }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+    
     
 }
