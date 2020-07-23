@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import restaurant.ConsoleHelper;
+import statistic.StatisticManager;
+import statistic.event.VideoSelectedEventDataRow;
 
 // Он также будет взаимодействовать с плеером и отображать ролики.
 public class AdvertisementManager{
@@ -42,6 +44,8 @@ public class AdvertisementManager{
                 return (c < 0)? -1: 1;
             }
         });
+        
+        StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestAdvList, maxAmount, timeSeconds));   //14.5 - Зарегистрируй событие "видео выбрано" перед отображением рекламы пользователю.
         
         for(Advertisement a: bestAdvList){
             a.revalidate();    // 10 - Для каждого показанного видео-ролика должен быть вызван метод revalidate().
