@@ -37,12 +37,13 @@ public class DirectorTablet {
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("d-MMMM-yyyy");
-//        for(Map.Entry<Date, TreeMap<String, Integer>> pair: cookWorkLoading.entrySet()){
-//            ConsoleHelper.writeMessage(dateFormat.format(pair.getKey()) + " - " + pair.getValue());    
-//            
-//        }
-//
-        
+        for(Map.Entry<Date, TreeMap<String, Integer>> pair: cookWorkLoading.entrySet()){
+            System.out.println(dateFormat.format(pair.getKey()));  //выводим дату
+            for(Map.Entry<String, Integer> innerPair: pair.getValue().entrySet()){
+                System.out.println(innerPair.getKey() + " - " + innerPair.getValue() + " min"); // имя повара - время затраченное на приготовление заказов за день
+            }
+            System.out.println();
+        }
     }
     
     // 3) список активных роликов и оставшееся количество показов по каждому;
