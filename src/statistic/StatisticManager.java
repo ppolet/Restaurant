@@ -4,7 +4,10 @@ package statistic;
 //11.1 - StatisticManager - С его помощью будем регистрировать события в хранилище. У нас должно быть одно хранилище с одной точкой входа. Поэтому сделаем StatisticManager синглтоном.
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import kitchen.Cook;
+import statistic.event.CookedOrderEventDataRow;
 import statistic.event.EventDataRow;
 import statistic.event.EventType;
+import statistic.event.VideoSelectedEventDataRow;
 
 public class StatisticManager {
     private static StatisticManager instance;  // приватное статическое поле, содержащее одиночный объект
@@ -65,18 +70,49 @@ public class StatisticManager {
     }
     
     //16.2 - который из хранилища достанет все данные, относящиеся к отображению рекламы, и посчитает общую прибыль за каждый день.
+    // возвращает отсортированный map <Data, Сумма>
     public TreeMap<Date, Long> getAdvertisingProfitByDay(){
-        TreeMap<Date, Long> result = new TreeMap<>();
+        TreeMap<Date, Long> result = new TreeMap<>(Comparator.reverseOrder());    //сортировка дат в убывающем порядке
         List<EventDataRow> list = statisticStorage.getStorage(EventType.SELECTED_VIDEOS);
+        GregorianCalendar cal = new GregorianCalendar();
         for(EventDataRow ev: list){
             //суммируем по датам
-            if (ev.getDate() != null)
-                result.put(ev.getDate(), result.get(ev.getDate()) + Long.valueOf(ev.getTime()));
+            VideoSelectedEventDataRow temp = (VideoSelectedEventDataRow)ev;
+            cal.setTime(temp.getDate());
+            cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  //преобразуем дату в дату без времени (00:00:00)
+            if (result.containsKey(cal.getTime()))
+                result.put(cal.getTime(), result.get(cal.getTime()) + temp.getAmount());  //если уже есть такая дата в мапе
             else
-                result.put(ev.getDate(), Long.valueOf(ev.getTime()));
+                result.put(cal.getTime(), temp.getAmount());  //если такой даты в мапе нет
         }
-        
         return result;
     }
+    
+    
+    //16.4 - загрузка (рабочее время) повара, сгруппировать по дням. Метод, который из хранилища достанет все данные, относящиеся к работе повара, 
+    //       и посчитает общую продолжительность работы для каждого повара отдельно. <Дата, <Повар, ПродолжительностьРаботы>>
+    public TreeMap<Date, TreeMap<String, Integer>> getCookInfo(){
+        TreeMap<Date, TreeMap<String, Integer>> result = new TreeMap<>(Comparator.reverseOrder());   //сортировка дат в убывающем порядке
+        List<EventDataRow> list = statisticStorage.getStorage(EventType.COOKED_ORDER);
+        GregorianCalendar cal = new GregorianCalendar();
+        for(EventDataRow ev: list){
+            //суммируем по датам
+            CookedOrderEventDataRow temp = (CookedOrderEventDataRow)ev;
+            cal.setTime(temp.getDate());
+            cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  //преобразуем дату в дату без времени (00:00:00)
+            TreeMap<String, Integer> cookTimeWork = new TreeMap<>();
+            int tempTimeWork = 0;
+            if (result.containsKey(cal.getTime())){   //такая дата уже есть, значит есть и внутренний мап
+                cookTimeWork = result.get(cal.getTime());
+                if(cookTimeWork.containsKey(temp.getCookName())){   //уже есть такое имя повара, складываем время работы
+                    tempTimeWork = cookTimeWork.get(temp.getCookName());   //время работы, которое уже есть в мапе
+                }
+            }
+            cookTimeWork.put(temp.getCookName(), tempTimeWork + temp.getTime());  // складываем время работы. которое уже было в мапе и новое значение для этого повара
+            result.put(cal.getTime(), cookTimeWork);
+        }
+        return result;
+    }
+    
     
 }
