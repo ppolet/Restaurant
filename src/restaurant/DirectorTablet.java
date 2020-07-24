@@ -14,7 +14,7 @@ public class DirectorTablet {
     public void printAdvertisementProfit(){
         TreeMap<Date, Long> advertisingByDay = StatisticManager.getInstance().getAdvertisingProfitByDay();
         if (advertisingByDay.isEmpty()) {
-            ConsoleHelper.writeMessage("---- No statistic at advertising vide ----");
+            ConsoleHelper.writeMessage("---- No statistic about advertising video ----");
             return;
         }
         
@@ -28,7 +28,20 @@ public class DirectorTablet {
     }
     
     // 2) загрузка (рабочее время) повара, сгруппировать по дням;
+    //16.5 - вывести в консоль в убывающем порядке даты, имена поваров и время работы в минутах (округлить в большую сторону)
     public void printCookWorkloading(){
+        TreeMap<Date, TreeMap<String, Integer>> cookWorkLoading = StatisticManager.getInstance().getCookWorkLoadingByDay();
+        if (cookWorkLoading.isEmpty()) {
+            ConsoleHelper.writeMessage("---- No statistic about cook work load ----");
+            return;
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d-MMMM-yyyy");
+//        for(Map.Entry<Date, TreeMap<String, Integer>> pair: cookWorkLoading.entrySet()){
+//            ConsoleHelper.writeMessage(dateFormat.format(pair.getKey()) + " - " + pair.getValue());    
+//            
+//        }
+//
         
     }
     

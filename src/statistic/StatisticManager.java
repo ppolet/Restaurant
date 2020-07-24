@@ -91,7 +91,7 @@ public class StatisticManager {
     
     //16.4 - загрузка (рабочее время) повара, сгруппировать по дням. Метод, который из хранилища достанет все данные, относящиеся к работе повара, 
     //       и посчитает общую продолжительность работы для каждого повара отдельно. <Дата, <Повар, ПродолжительностьРаботы>>
-    public TreeMap<Date, TreeMap<String, Integer>> getCookInfo(){
+    public TreeMap<Date, TreeMap<String, Integer>> getCookWorkLoadingByDay(){
         TreeMap<Date, TreeMap<String, Integer>> result = new TreeMap<>(Comparator.reverseOrder());   //сортировка дат в убывающем порядке
         List<EventDataRow> list = statisticStorage.getStorage(EventType.COOKED_ORDER);
         GregorianCalendar cal = new GregorianCalendar();
