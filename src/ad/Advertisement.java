@@ -32,6 +32,10 @@ public class Advertisement {
         return amountPerOneDisplaying;
     }
 
+    public int getHits(){
+        return hits;
+    }
+    
     //9.2.5
     public void revalidate(){
         if (hits <= 0) {

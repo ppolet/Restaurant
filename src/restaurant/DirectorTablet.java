@@ -1,11 +1,16 @@
 
 package restaurant;
 
+import ad.Advertisement;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import statistic.StatisticManager;
+import ad.StatisticAdvertisementManager;
 
 //15 - планшет для директора
 public class DirectorTablet {
@@ -47,13 +52,38 @@ public class DirectorTablet {
     }
     
     // 3) список активных роликов и оставшееся количество показов по каждому;
+    //17.4
     public void printActiveVideoSet(){
+        List<Advertisement> list = StatisticAdvertisementManager.getInstance().getActiveAdvVideo();
+        Collections.sort(list, new Comparator<Advertisement>(){
+            @Override
+            public int compare(Advertisement o1, Advertisement o2) {
+                int result = o1.getName().compareTo(o2.getName());
+                if(result == 0){
+                    result = (o1.getHits() < o2.getHits()) ? -1: 1;
+                }
+                return result;
+            }
+        });
+        for(Advertisement v: list){
+            System.out.println(v.getName() + " - " + v.getHits());
+        }
         
     }
     
     // 4) список неактивных роликов (с оставшемся количеством показов равным нулю).
+    //17.4
     public void printArchivedVideoSet(){
-        
+        List<Advertisement> list = StatisticAdvertisementManager.getInstance().getNonActiveAdvVideo();
+        Collections.sort(list, new Comparator<Advertisement>(){
+            @Override
+            public int compare(Advertisement o1, Advertisement o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        for(Advertisement v: list){
+            System.out.println(v.getName());
+        }
     }
     
 }

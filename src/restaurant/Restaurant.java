@@ -6,6 +6,8 @@ import kitchen.Waiter;
 
 public class Restaurant {
 
+    private static final int ORDER_CREATING_INTERVAL = 100;   //18.1
+            
     public static void main(String[] args) {
         Cook cook = new Cook("Amigo");
         Tablet tablet = new Tablet(1);
