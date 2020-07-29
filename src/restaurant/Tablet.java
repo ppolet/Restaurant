@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kitchen.Order;
+import kitchen.TestOrder;
 
 public class Tablet extends Observable{
     private final int number;  //1 - номер планшета, чтобы можно было однозначно установить, откуда поступил заказ.
@@ -35,10 +36,25 @@ public class Tablet extends Observable{
         return order;  //3.5
     }
 
+    //18.2.4 - который будет случайным образом генерировать заказ со случайными блюдами не общаясь с реальным человеком.
+    public void createTestOrder(){
+        TestOrder order = null;
+        try {
+            order = new TestOrder(this);  //Создаем новый заказ на этом планшете
+            if(!order.isEmpty()){    //5.5
+                ConsoleHelper.writeMessage(order.toString());
+                new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();  //8.5 - вызываем видео и передаем ему время готовки заказа в секундах
+                setChanged();
+                notifyObservers(order);
+            }
+        } catch (IOException ex) {
+            System.out.println("Exception at tablet: " + ex.getMessage());
+            logger.log(Level.SEVERE, "Console is unavailable...", ex);
+        }
+    }
+
     @Override
     public String toString() {
         return "Tablet {number = " + number + "}";
-    }
-    
-
+    }    
 }

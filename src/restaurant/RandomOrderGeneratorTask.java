@@ -6,15 +6,19 @@ package restaurant;
 import java.util.List;
 
 public class RandomOrderGeneratorTask implements Runnable{
-    private List<Tablet> listTablets;   //18.2.2
+    private List<Tablet> tablets;   //18.2.2
+    private int interval; //19
     
-    public RandomOrderGeneratorTask(List<Tablet> listTablets){
-        this.listTablets = listTablets;
+    public RandomOrderGeneratorTask(List<Tablet> tablets, int interval){
+        this.tablets = tablets;
+        this.interval = interval;
     }
 
     @Override
     public void run() {
-        Tablet tablet = listTablets.get((int)Math.random()*listTablets.size());  //18.2.2
+        if (tablets.isEmpty()) return;
+        
+        Tablet tablet = tablets.get((int)Math.random()*tablets.size());  //18.2.2
         
     }
     
