@@ -1,9 +1,9 @@
 
-package statistic.event;
+package restaurant.statistic.event;
 
 //12.2.3
 
-import ad.Advertisement;
+import restaurant.ad.Advertisement;
 import java.util.Date;
 import java.util.List;
 

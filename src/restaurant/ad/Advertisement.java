@@ -1,5 +1,5 @@
 
-package ad;
+package restaurant.ad;
 
 //6 - Рекламное объявление
 public class Advertisement {

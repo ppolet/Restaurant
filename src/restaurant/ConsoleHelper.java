@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import static java.lang.System.in;
 import java.util.ArrayList;
 import java.util.List;
-import kitchen.Dish;
+import restaurant.kitchen.Dish;
 
 public class ConsoleHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

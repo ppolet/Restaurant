@@ -1,5 +1,5 @@
 
-package statistic.event;
+package restaurant.statistic.event;
 
 //12.2.2
 

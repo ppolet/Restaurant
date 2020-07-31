@@ -1,5 +1,5 @@
 
-package kitchen;
+package restaurant.kitchen;
 
 //1.4 - В классе Order (заказ) должна быть информация, относящаяся к списку выбранных пользователем блюд.
 
@@ -16,7 +16,7 @@ public class Order {
     
     public Order(Tablet tablet) throws IOException{
         this.tablet = tablet;
-        this.dishes = ConsoleHelper.getAllDishesForOrder();
+        initDishes();
     }
     
     //2.4
@@ -56,6 +56,10 @@ public class Order {
     
     public Tablet getTablet(){
         return tablet;
+    }
+    
+    protected void initDishes() throws IOException{
+        dishes = ConsoleHelper.getAllDishesForOrder();
     }
     
 }

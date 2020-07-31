@@ -1,5 +1,5 @@
 
-package kitchen;
+package restaurant.kitchen;
 
 //18.2.4 
 
@@ -17,6 +17,7 @@ public class TestOrder extends Order {
     }
     
     //переопредели initDishes в классе-наследнике TestOrder. Сделай инициализацию случайным набором блюд.
+    @Override
     protected void initDishes(){
         dishes = new ArrayList<>();
         dishes.addAll(Arrays.asList(Dish.values()));              // записываем все блюда в ArrayList

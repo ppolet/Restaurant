@@ -1,5 +1,5 @@
 
-package ad;
+package restaurant.ad;
 
 //6.4 - хранилище рекламных роликов. СИНГЛТОН
 

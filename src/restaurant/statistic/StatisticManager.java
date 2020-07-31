@@ -1,5 +1,5 @@
 
-package statistic;
+package restaurant.statistic;
 
 //11.1 - StatisticManager - С его помощью будем регистрировать события в хранилище. У нас должно быть одно хранилище с одной точкой входа. Поэтому сделаем StatisticManager синглтоном.
 
@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import kitchen.Cook;
-import statistic.event.CookedOrderEventDataRow;
-import statistic.event.EventDataRow;
-import statistic.event.EventType;
-import statistic.event.VideoSelectedEventDataRow;
+import restaurant.kitchen.Cook;
+import restaurant.statistic.event.CookedOrderEventDataRow;
+import restaurant.statistic.event.EventDataRow;
+import restaurant.statistic.event.EventType;
+import restaurant.statistic.event.VideoSelectedEventDataRow;
 
 public class StatisticManager {
     private static StatisticManager instance;  // приватное статическое поле, содержащее одиночный объект
@@ -36,6 +36,11 @@ public class StatisticManager {
             instance = new StatisticManager();
         }
         return instance;
+    }
+    
+    //21.4 - список всех поваров
+    public Set<Cook> getCooks(){
+        return cooks;
     }
     
     //11.5 - который будет регистрировать событие в хранилище.

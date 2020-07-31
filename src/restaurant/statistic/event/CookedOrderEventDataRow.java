@@ -1,11 +1,11 @@
 
-package statistic.event;
+package restaurant.statistic.event;
 
 //12.2.1
 
 import java.util.Date;
 import java.util.List;
-import kitchen.Dish;
+import restaurant.kitchen.Dish;
 
 public class CookedOrderEventDataRow implements EventDataRow{
     private String tabletName;          //имя планшета

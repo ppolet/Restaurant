@@ -1,7 +1,7 @@
 
 package restaurant;
 
-import ad.Advertisement;
+import restaurant.ad.Advertisement;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import statistic.StatisticManager;
-import ad.StatisticAdvertisementManager;
+import restaurant.statistic.StatisticManager;
+import restaurant.ad.StatisticAdvertisementManager;
 
 //15 - планшет для директора
 public class DirectorTablet {

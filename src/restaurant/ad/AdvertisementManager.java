@@ -1,5 +1,5 @@
 
-package ad;
+package restaurant.ad;
 
 //6.4 - у каждого планшета будет свой объект менеджера, который будет подбирать оптимальный набор роликов и их последовательность для каждого заказа.
 
@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import restaurant.ConsoleHelper;
-import statistic.StatisticManager;
-import statistic.event.VideoSelectedEventDataRow;
+import restaurant.statistic.StatisticManager;
+import restaurant.statistic.event.VideoSelectedEventDataRow;
 
 // Он также будет взаимодействовать с плеером и отображать ролики.
 public class AdvertisementManager{
@@ -27,7 +27,7 @@ public class AdvertisementManager{
     public void processVideos() throws NoVideoAvailableException{
         //10
         findBestAdvertisement(storage.list());
-        if (bestAdvList.size() == 0) throw new NoVideoAvailableException();   // 9.2.3 нет рекламных видео, которые можно показать посетителю
+        if (bestAdvList.isEmpty()) throw new NoVideoAvailableException();   // 9.2.3 нет рекламных видео, которые можно показать посетителю
         /*
             2.4. Отобразить все рекламные ролики, отобранные для показа, в порядке уменьшения стоимости показа одного рекламного ролика
             в копейках. Вторичная сортировка - по увеличению стоимости показа одной секунды рекламного ролика в тысячных частях копейки

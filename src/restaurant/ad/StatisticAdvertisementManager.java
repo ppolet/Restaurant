@@ -1,5 +1,5 @@
 
-package ad;
+package restaurant.ad;
 
 //17 - который будет предоставлять информацию из AdvertisementStorage в нужном нам виде. Синглтон.
 

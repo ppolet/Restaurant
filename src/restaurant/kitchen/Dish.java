@@ -1,5 +1,5 @@
 
-package kitchen;
+package restaurant.kitchen;
 
 //1.5
 public enum Dish {

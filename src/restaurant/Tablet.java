@@ -1,13 +1,16 @@
 
 package restaurant;
 
-import ad.AdvertisementManager;
+import restaurant.ad.AdvertisementManager;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kitchen.Order;
-import kitchen.TestOrder;
+import restaurant.ad.NoVideoAvailableException;
+import restaurant.kitchen.Order;
+import restaurant.kitchen.TestOrder;
+import restaurant.statistic.StatisticManager;
+import restaurant.statistic.event.NoAvailableVideoEventDataRow;
 
 public class Tablet extends Observable{
     private final int number;  //1 - номер планшета, чтобы можно было однозначно установить, откуда поступил заказ.
@@ -29,6 +32,9 @@ public class Tablet extends Observable{
                 setChanged();
                 notifyObservers(order);
             }
+        } catch (NoVideoAvailableException e) {
+            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(order.getTotalCookingTime()*60));
+            logger.log(Level.INFO, "No video is available for the order " + order);
         } catch (IOException ex) {
             System.out.println("Exception at tablet: " + ex.getMessage());
             logger.log(Level.SEVERE, "Console is unavailable...", ex);
@@ -47,6 +53,9 @@ public class Tablet extends Observable{
                 setChanged();
                 notifyObservers(order);
             }
+        } catch (NoVideoAvailableException e) {
+            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(order.getTotalCookingTime()*60));
+            logger.log(Level.INFO, "No video is available for the order " + order);
         } catch (IOException ex) {
             System.out.println("Exception at tablet: " + ex.getMessage());
             logger.log(Level.SEVERE, "Console is unavailable...", ex);

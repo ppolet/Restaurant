@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kitchen.Cook;
-import kitchen.Waiter;
-import statistic.StatisticManager;
+import restaurant.kitchen.Cook;
+import restaurant.kitchen.Waiter;
+import restaurant.statistic.StatisticManager;
 
 public class Restaurant {
 
@@ -24,10 +24,10 @@ public class Restaurant {
 
         //19.5 - Создай список объектов-планшетов 5 штук, инициализируйте его в цикле.
         List<Tablet> tablets = new ArrayList<>();
+        OrderManager orderManager = new OrderManager();  //20.6
         for(int i=0; i<5; i++){
             Tablet tablet = new Tablet(i);
-            tablet.addObserver(cook1);
-            tablet.addObserver(cook2);
+            tablet.addObserver(orderManager);           //20.6
             tablets.add(tablet);
         }
         
