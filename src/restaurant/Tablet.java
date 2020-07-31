@@ -4,6 +4,7 @@ package restaurant;
 import restaurant.ad.AdvertisementManager;
 import java.io.IOException;
 import java.util.Observable;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import restaurant.ad.NoVideoAvailableException;
@@ -12,12 +13,18 @@ import restaurant.kitchen.TestOrder;
 import restaurant.statistic.StatisticManager;
 import restaurant.statistic.event.NoAvailableVideoEventDataRow;
 
-public class Tablet extends Observable{
+public class Tablet{
     private final int number;  //1 - номер планшета, чтобы можно было однозначно установить, откуда поступил заказ.
     private static Logger logger = Logger.getLogger(Tablet.class.getName());   //2.5
+    private LinkedBlockingQueue<Order> orderQueue;    //22.4
     
     public Tablet(int number){
         this.number = number;
+    }
+    
+    //22.4
+    public void setOrderQueue(LinkedBlockingQueue<Order> order){
+        this.orderQueue = order;
     }
     
     //1.3 - будет создавать заказ из тех блюд, которые выберет пользователь.
@@ -29,8 +36,9 @@ public class Tablet extends Observable{
             if(!order.isEmpty()){    //5.5
                 ConsoleHelper.writeMessage(order.toString());
                 new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();  //8.5 - вызываем видео и передаем ему время готовки заказа в секундах
-                setChanged();
-                notifyObservers(order);
+                //setChanged();
+                //notifyObservers(order);
+                orderQueue.add(order);  //22.5 - добавляем заказ в очередь
             }
         } catch (NoVideoAvailableException e) {
             StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(order.getTotalCookingTime()*60));
@@ -50,8 +58,9 @@ public class Tablet extends Observable{
             if(!order.isEmpty()){    //5.5
                 ConsoleHelper.writeMessage(order.toString());
                 new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();  //8.5 - вызываем видео и передаем ему время готовки заказа в секундах
-                setChanged();
-                notifyObservers(order);
+                //setChanged();
+                //notifyObservers(order);
+                orderQueue.add(order);  //22.5 - добавляем заказ в очередь
             }
         } catch (NoVideoAvailableException e) {
             StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(order.getTotalCookingTime()*60));

@@ -5,19 +5,27 @@ package restaurant.kitchen;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import restaurant.ConsoleHelper;
+import restaurant.Restaurant;
 import restaurant.statistic.StatisticManager;
 import restaurant.statistic.event.CookedOrderEventDataRow;
 
 
-public class Cook extends Observable {
+public class Cook extends Observable implements Runnable{
     private String name;
     private boolean busy;   //21.1
+    private LinkedBlockingQueue<Order> orderQueue;    //22.1
     
     public Cook(String name){
         this.name = name;
+    }
+
+    //22.2
+    public void setOrderQueue(LinkedBlockingQueue<Order> order){
+        this.orderQueue = order;
     }
     
     public boolean isBusy(){

@@ -3,19 +3,28 @@ package restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import restaurant.kitchen.Cook;
+import restaurant.kitchen.Order;
 import restaurant.kitchen.Waiter;
 import restaurant.statistic.StatisticManager;
 
 public class Restaurant {
 
     private static final int ORDER_CREATING_INTERVAL = 100;   //18.1
+    private final static LinkedBlockingQueue<Order> ORDER_QUEUE = new LinkedBlockingQueue<>();    //22.1
             
     public static void main(String[] args) {
+        // создадим 2 повара
         Cook cook1 = new Cook("Amigo");
         Cook cook2 = new Cook("Armando");
+        cook1.setOrderQueue(ORDER_QUEUE);  //22.2
+        cook2.setOrderQueue(ORDER_QUEUE);  //22.2
+        Thread threadCook1 = new Thread(cook1); //22.6
+        Thread threadCook2 = new Thread(cook2); //22.6
+
         StatisticManager.getInstance().register(cook1);   //19.3
         StatisticManager.getInstance().register(cook2);   //19.3
 
@@ -27,9 +36,11 @@ public class Restaurant {
         OrderManager orderManager = new OrderManager();  //20.6
         for(int i=0; i<5; i++){
             Tablet tablet = new Tablet(i);
-            tablet.addObserver(orderManager);           //20.6
+            tablet.setOrderQueue(ORDER_QUEUE);          //22.4
+//            tablet.addObserver(orderManager);           //20.6
             tablets.add(tablet);
         }
+        
         
         Waiter waiter = new Waiter();  //4.5
         cook1.addObserver(waiter);
