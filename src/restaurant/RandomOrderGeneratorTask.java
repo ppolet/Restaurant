@@ -21,7 +21,7 @@ public class RandomOrderGeneratorTask implements Runnable{
         if (tablets.isEmpty()) return;
         
         while(!Thread.currentThread().isInterrupted()){
-            Tablet tablet = tablets.get((int)Math.random()*tablets.size());  //18.2.2
+            Tablet tablet = tablets.get((int)(Math.random()*tablets.size()));  //18.2.2
             tablet.createTestOrder();
             
             try {

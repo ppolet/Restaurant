@@ -21,13 +21,12 @@ import restaurant.statistic.event.EventType;
 import restaurant.statistic.event.VideoSelectedEventDataRow;
 
 public class StatisticManager {
-    private static StatisticManager instance;  // приватное статическое поле, содержащее одиночный объект
+    private static volatile StatisticManager instance;  // приватное статическое поле, содержащее одиночный объект
     private StatisticStorage statisticStorage = new StatisticStorage();   //13.2
     //private Set<Cook> cooks = new HashSet<>();   //15.5 - множество поваров
     
     // конструктор класса (конструктор по-умолчанию) приватным (чтобы доступ к нему был закрыт за пределами класса, тогда он не сможет возвращать новые объекты)
     private StatisticManager(){
-        
     }
     
     // статический создающий метод, который будет использоваться для получения одиночки

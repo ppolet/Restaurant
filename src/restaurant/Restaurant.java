@@ -1,12 +1,9 @@
 
 package restaurant;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import restaurant.kitchen.Cook;
 import restaurant.kitchen.Order;
 import restaurant.kitchen.Waiter;
@@ -17,7 +14,7 @@ public class Restaurant {
     private static final int ORDER_CREATING_INTERVAL = 100;   //18.1
     private final static LinkedBlockingQueue<Order> ORDER_QUEUE = new LinkedBlockingQueue<>();    //22.1
             
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
         // создадим 2 повара
         Cook cook1 = new Cook("Amigo");
         Cook cook2 = new Cook("Armando");
@@ -63,6 +60,9 @@ public class Restaurant {
             System.out.println("Exception: " + ex.getMessage());
         }
         thread.interrupt();         // 19.7 - прерываем
+        
+        threadCook1.interrupt();
+        threadCook2.interrupt();
         
         //15.3
         DirectorTablet directorTablet = new DirectorTablet();

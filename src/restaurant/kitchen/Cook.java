@@ -58,7 +58,7 @@ public class Cook extends Observable implements Runnable{
     //20.4
     public void startCookingOrder(Order order){
         busy = true;        //21.2 - повар занят
-        ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time: " + order.getTotalCookingTime() + " min.");   //3.3
+        ConsoleHelper.writeMessage("      --- Start cooking - " + order + ", cooking time: " + order.getTotalCookingTime() + " min.");   //3.3
         try {
             Thread.sleep(order.getTotalCookingTime()*10);   //21.3 - имитация задержки при приготовлении блюда, поставь слип в 10-кратном размере от времени приготовления заказа.
         } catch (InterruptedException ex) {
@@ -73,7 +73,7 @@ public class Cook extends Observable implements Runnable{
 
     @Override
     public void run() {
-        while(true){
+        while (!Thread.currentThread().isInterrupted()){
             if(!orderQueue.isEmpty()){  //есть заказы
                 if (!this.busy){            //повар не занят, берет заказ
                     startCookingOrder(orderQueue.poll());   //теперь повар занят и готовит заказ, заказ удаляется из очереди
@@ -82,7 +82,8 @@ public class Cook extends Observable implements Runnable{
             try {
                 sleep(10);
             } catch (InterruptedException ex) {
-                System.out.println("Exception: " + ex.getMessage());
+                System.out.println("Exception from cook: " + ex.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
