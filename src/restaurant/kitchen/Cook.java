@@ -3,6 +3,7 @@ package restaurant.kitchen;
 
 //3.1 - он будет готовить
 
+import static java.lang.Thread.sleep;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -68,6 +69,22 @@ public class Cook extends Observable implements Runnable{
         setChanged();           //4.4
         notifyObservers(order);  //4.4
         busy = false;       //21.2
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            if(!orderQueue.isEmpty()){  //есть заказы
+                if (!this.busy){            //повар не занят, берет заказ
+                    startCookingOrder(orderQueue.poll());   //теперь повар занят и готовит заказ, заказ удаляется из очереди
+                }
+            }
+            try {
+                sleep(10);
+            } catch (InterruptedException ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
+        }
     }
     
 }

@@ -23,7 +23,7 @@ import restaurant.statistic.event.VideoSelectedEventDataRow;
 public class StatisticManager {
     private static StatisticManager instance;  // приватное статическое поле, содержащее одиночный объект
     private StatisticStorage statisticStorage = new StatisticStorage();   //13.2
-    private Set<Cook> cooks = new HashSet<>();   //15.5 - множество поваров
+    //private Set<Cook> cooks = new HashSet<>();   //15.5 - множество поваров
     
     // конструктор класса (конструктор по-умолчанию) приватным (чтобы доступ к нему был закрыт за пределами класса, тогда он не сможет возвращать новые объекты)
     private StatisticManager(){
@@ -39,9 +39,9 @@ public class StatisticManager {
     }
     
     //21.4 - список всех поваров
-    public Set<Cook> getCooks(){
-        return cooks;
-    }
+//    public Set<Cook> getCooks(){
+//        return cooks;
+//    }
     
     //11.5 - который будет регистрировать событие в хранилище.
     public void register(EventDataRow data){
@@ -49,9 +49,9 @@ public class StatisticManager {
     }
     
     //15.5 - который зарегистрирует полученного повара.
-    public void register(Cook cook){
-        cooks.add(cook);
-    }
+//    public void register(Cook cook){
+//        cooks.add(cook);
+//    }
     
     //13 - Хранилище
     private class StatisticStorage{
